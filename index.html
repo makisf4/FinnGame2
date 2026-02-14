@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <title>Finn Sky Diner Catch</title>
+    <link rel="stylesheet" href="style.css?v=ios10" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <h1>Finn Sky Diner Catch</h1>
+        <p>Catch food before it hits the ground. You lose after 3 misses.</p>
+      </header>
+
+      <section class="game-shell">
+        <div class="mini-hud" aria-label="Mini HUD">
+          <div class="mini-item mini-score">Score: <strong id="stat-score">0</strong></div>
+          <button id="leader-toggle" class="mini-leader" type="button">Leaderboard</button>
+          <div class="mini-item">Misses: <strong id="stat-misses">0 / 3</strong></div>
+          <button id="audio-toggle" class="mini-audio" type="button">Sound: ON</button>
+          <button id="edit-name" class="mini-edit" type="button">Edit Name</button>
+        </div>
+
+        <div class="game-stage">
+          <canvas id="game" width="960" height="540" aria-label="Finn arcade catch game"></canvas>
+
+          <aside class="game-leaderboard" aria-label="LeaderBoard">
+            <h2>LeaderBoard</h2>
+            <ol id="leader-list" class="game-leader-list">
+              <li>No scores yet</li>
+            </ol>
+          </aside>
+
+          <div id="name-card" class="name-card">
+            <div class="name-card-inner">
+              <p>ποιο είναι το όνομά σου;</p>
+              <input id="name-input" type="text" maxlength="24" autocomplete="name" />
+              <button id="name-submit" type="button">Start</button>
+            </div>
+          </div>
+        </div>
+
+        <p id="status-box" class="status-line">Ready</p>
+      </section>
+
+      <div class="controls-desktop">
+        <span>Move: A / D or Left / Right</span>
+        <span>Restart: R or Enter</span>
+        <span>Mobile: Use thumb buttons</span>
+      </div>
+    </main>
+
+    <div class="thumb-controls" aria-label="Mobile movement buttons">
+      <button id="btn-left" class="thumb-btn thumb-left" type="button" aria-label="Move left">◀</button>
+      <div class="thumb-score" aria-live="polite">Score: <strong id="stat-score-mobile">0</strong></div>
+      <button id="btn-right" class="thumb-btn thumb-right" type="button" aria-label="Move right">▶</button>
+    </div>
+
+    <script src="game.js?v=ios26"></script>
+  </body>
+</html>

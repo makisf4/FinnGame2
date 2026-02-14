@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 180">
+  <defs>
+    <linearGradient id="gHull" x1="0" x2="1">
+      <stop offset="0" stop-color="#fb7185"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="gTop" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="320" cy="155" rx="250" ry="16" fill="#0b1324" opacity="0.28"/>
+  <rect x="74" y="30" width="492" height="24" rx="10" fill="url(#gTop)"/>
+  <rect x="34" y="50" width="572" height="84" rx="16" fill="url(#gHull)"/>
+  <rect x="34" y="121" width="572" height="14" fill="#7c2d12"/>
+  <rect x="176" y="54" width="286" height="34" rx="10" fill="#0f172a" opacity="0.35"/>
+  <g fill="#f8fafc" opacity="0.85">
+    <rect x="74" y="78" width="26" height="20" rx="4"/>
+    <rect x="108" y="78" width="26" height="20" rx="4"/>
+    <rect x="508" y="78" width="26" height="20" rx="4"/>
+    <rect x="542" y="78" width="26" height="20" rx="4"/>
+  </g>
+  <g transform="translate(10 88)">
+    <circle cx="0" cy="0" r="24" fill="#fecaca"/>
+    <circle cx="0" cy="0" r="13" fill="#fca5a5"/>
+  </g>
+  <g transform="translate(630 88)">
+    <circle cx="0" cy="0" r="24" fill="#fecaca"/>
+    <circle cx="0" cy="0" r="13" fill="#fca5a5"/>
+  </g>
+</svg>
