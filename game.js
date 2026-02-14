@@ -118,6 +118,8 @@
     playerName: "finn.playerName.v1",
     leaderboard: "finn.leaderboard.v1",
   };
+  const leaderboardApiPath = "/api/leaderboard";
+  let remoteLeaderboardAvailable = null;
 
   let audioCtx = null;
   let audioEnabled = true;
@@ -552,6 +554,7 @@
     safeStorageSet(storageKeys.playerName, playerName);
     if (nameCardMode === "edit") {
       renameLeaderboardPlayer(previousName, playerName);
+      void syncLeaderboardRenameRemote(previousName, playerName);
     }
     renderLeaderboard();
     closeNameCard();
@@ -583,6 +586,69 @@
 
   function saveLeaderboard() {
     safeStorageSet(storageKeys.leaderboard, JSON.stringify(leaderboard));
+  }
+
+  async function fetchLeaderboardRemote() {
+    try {
+      const res = await fetch(`${leaderboardApiPath}?t=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (!data || !Array.isArray(data.entries)) throw new Error("Bad payload");
+      remoteLeaderboardAvailable = true;
+      leaderboard = normalizeLeaderboard(data.entries);
+      saveLeaderboard();
+      renderLeaderboard();
+      return true;
+    } catch (_) {
+      remoteLeaderboardAvailable = false;
+      return false;
+    }
+  }
+
+  async function syncLeaderboardRecordRemote(name, score) {
+    try {
+      const res = await fetch(leaderboardApiPath, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "record",
+          name: sanitizeName(name),
+          score: Math.floor(Number(score) || 0),
+        }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (!data || !Array.isArray(data.entries)) throw new Error("Bad payload");
+      remoteLeaderboardAvailable = true;
+      leaderboard = normalizeLeaderboard(data.entries);
+      saveLeaderboard();
+      renderLeaderboard();
+    } catch (_) {
+      remoteLeaderboardAvailable = false;
+    }
+  }
+
+  async function syncLeaderboardRenameRemote(oldName, newName) {
+    try {
+      const res = await fetch(leaderboardApiPath, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "rename",
+          oldName: sanitizeName(oldName),
+          newName: sanitizeName(newName),
+        }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (!data || !Array.isArray(data.entries)) throw new Error("Bad payload");
+      remoteLeaderboardAvailable = true;
+      leaderboard = normalizeLeaderboard(data.entries);
+      saveLeaderboard();
+      renderLeaderboard();
+    } catch (_) {
+      remoteLeaderboardAvailable = false;
+    }
   }
 
   function renderLeaderboard() {
@@ -662,6 +728,7 @@
     upsertLeaderboardScore(playerName || "Player", Number(finalScore));
     saveLeaderboard();
     renderLeaderboard();
+    void syncLeaderboardRecordRemote(playerName || "Player", Number(finalScore));
   }
 
   function setMobileLeaderboardOpen(open) {
@@ -1367,6 +1434,7 @@
   loadPlayerName();
   loadLeaderboard();
   renderLeaderboard();
+  void fetchLeaderboardRemote();
   renderFoodList();
   updateAudioButton();
   setMobileLeaderboardOpen(false);
