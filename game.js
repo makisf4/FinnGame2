@@ -40,7 +40,7 @@
     { id: "bread", name: "Bread", value: 6, color: "#d6a24f", rim: "#92400e", r: 12, sprite: "foodBread" },
     { id: "hazelnuts", name: "Hazelnuts", value: 8, color: "#8b5e34", rim: "#5b3a1d", r: 10, sprite: "foodHazelnuts" },
     { id: "veggies", name: "Veggies", value: 5, color: "#22c55e", rim: "#166534", r: 11, sprite: "foodVeggies" },
-    { id: "pooae", name: "Pooae", value: 24, color: "#a855f7", rim: "#6b21a8", r: 12, sprite: null },
+    { id: "pweh", name: "Pweh", value: 24, color: "#a855f7", rim: "#6b21a8", r: 12, sprite: null },
   ];
   const baseCustomerNames = ["Dido", "Elli", "Aggelos", "Cecile", "Makis"];
   const extraCustomerNames = ["Stergios", "Thanos", "Maria", "Alexandra", "Konstantina"];
@@ -133,7 +133,7 @@
     bread: "assets/audio/callouts/bread.wav?v=1",
     hazelnuts: "assets/audio/callouts/hazelnuts.wav?v=1",
     veggies: "assets/audio/callouts/veggies.wav?v=1",
-    pooae: "assets/audio/callouts/pooae.wav?v=1",
+    pweh: "assets/audio/callouts/pweh.wav?v=1",
   };
   let preferredSpeechVoice = null;
   let speechUnlocked = false;
@@ -440,7 +440,7 @@
 
   function randomFoodType() {
     const n = Math.random();
-    if (n < 0.035) return foodTypes[6]; // Rare special drop: Pooae
+    if (n < 0.035) return foodTypes[6]; // Rare special drop: Pweh
     if (n < 0.205) return foodTypes[0];
     if (n < 0.34) return foodTypes[1];
     if (n < 0.48) return foodTypes[2];
